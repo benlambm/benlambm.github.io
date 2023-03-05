@@ -5,6 +5,10 @@
 ## Summary 📝
 Currently involved in open source projects and looking for opportunities in Kotlin/Android or backend programming.👀 I am a budding application developer and database programmer, proficient in various programming languages (Kotlin, Java, C#, SQL, Linux/bash scripting, Python, and PHP) and experienced in using Agile methodologies with a variety of frameworks and design patterns. I am also AWS and Azure-certified and previously worked as an IT consultant in the cloud-computing platforms space. I enjoy coding algorithms, reading science-fiction, and I love my cat Freya more than my own (nonexistent) child. 😻
 
+## Programming Fluencies 💻
+- Fluent: Kotlin, Java, Python, SQL, Git, HTML/CSS
+- Intermediate: C#, JavaScript, Vue.js, PHP, Linux / bash
+
 ## Work Experience 💼
 
 ### Application Developer, Sogeti Consultant – Capgemini 🖥️ (July 2022-Nov 2022)
@@ -22,11 +26,19 @@ Currently involved in open source projects and looking for opportunities in Kotl
 ## Education 📚
 Currently studying at Virginia Tech as a Masters of Information Technology student (online program ranked #3 in nation by US News for 2022 and 2023 🙌). Prior to that, he received his PhD in Sociology from the University of Colorado, Bachelor of Science in Information Technology: Application and Database Development from Liberty University, and a Database and Program Developer Certificate from Virginia Western Community College. 😊
 
-## Programming Fluencies 💻
-- Fluent: Java, SQL (MySQL, SQL Server, TSQL), Git, HTML/CSS, Python, Kotlin
-- Intermediate: C#, JavaScript, Vue.js, PHP, Linux / bash
+### Courses Taken (For the Curious)
+- CS5704 Software Engineering 🛠️
+- CS5044 Object-Oriented Programming in Java ☕
+- CS5744 Software Design and Quality 👨‍💻
+- ACIS5504 Database Systems and Concepts 📊
+- CS5244 Web Application Development 🕸️
+- ECE5484 Fundamentals of Computer Systems 💻
+- ECE5480 Cybersecurity and the IoT 🔒
+- CS5254 Mobile Application Development 📱
+- ECE5494 AI Innovation & Machine Learning 🤖
+- MGT5804 Leadership in Tech-Based Organizations 👔
 
-## Current Certifications 📜
+### Current Certifications 📜
 All active and verifiable certifications on credly.com/users/benjamin-lamb:
 - Oracle Certified Associate (OCA), Java SE8 Programmer
 - Java Foundations Oracle Junior Associate
@@ -51,7 +63,7 @@ All active and verifiable certifications on credly.com/users/benjamin-lamb:
 - Microsoft Office Specialist, PowerPoint 2016
 - Microsoft Office Specialist, Word 2016
 
-## Additional Skills 🤖
+### Additional Skills 🤖
 - Web development and web-server hosting configuration
 - Skilled in software engineering methodologies and systems design
 - Experienced in object-oriented and functional programming
