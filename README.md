@@ -1,4 +1,4 @@
-# Benjamin Lamb, PhD 🎓
+# Benjamin Lamb
 - 👋 Hi, I’m @benlambm on GitHub
 - 📫 How to reach me: benlamb@vt.edu
 
@@ -29,17 +29,16 @@ Currently studying at Virginia Tech as a Masters of Information Technology stude
 ### Courses Taken (For the Curious)
 - CS5704 Software Engineering 🛠️
 - CS5044 Object-Oriented Programming in Java ☕
+- CS5254 Mobile Application Development 📱
 - CS5744 Software Design and Quality 👨‍💻
 - ACIS5504 Database Systems and Concepts 📊
 - CS5244 Web Application Development 🕸️
 - ECE5484 Fundamentals of Computer Systems 💻
 - ECE5480 Cybersecurity and the IoT 🔒
-- CS5254 Mobile Application Development 📱
 - ECE5494 AI Innovation & Machine Learning 🤖
 - MGT5804 Leadership in Tech-Based Organizations 👔
 
 ### Current Certifications 📜
-All active and verifiable certifications on credly.com/users/benjamin-lamb:
 - Oracle Certified Associate (OCA), Java SE8 Programmer
 - Java Foundations Oracle Junior Associate
 - Microsoft MTA: Java Programming
