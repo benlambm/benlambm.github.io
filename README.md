@@ -3,7 +3,7 @@
 - 📫 How to reach me: benlamb@vt.edu
 
 ## Summary 📝
-Currently involved in open source projects and looking for opportunities in Kotlin/Android or backend programming.👀 I am a budding application developer and database programmer, proficient in various programming languages (Kotlin, Java, C#, SQL, Linux/bash scripting, Python, and PHP) and experienced in using Agile methodologies with a variety of frameworks and design patterns. I am also AWS and Azure-certified and previously worked as an IT consultant in the cloud-computing platforms space. I enjoy coding algorithms, reading science-fiction, and I love my cat Freya more than my own (nonexistent) child. 😻
+Currently involved in open source projects and looking for opportunities in Java/Kotlin backend programming.👀 I am a budding application developer and database programmer, proficient in various programming languages (Kotlin, Java, C#, SQL, Linux/bash scripting, Python, and PHP) and experienced in using Agile methodologies with a variety of frameworks and design patterns. I am also AWS and Azure-certified and previously worked as an IT consultant in the cloud-computing platforms space. I enjoy coding algorithms, reading science-fiction, and my cat Freya. 😻
 
 ## Programming Fluencies 💻
 - Fluent: Kotlin, Java, Python, SQL, Git, HTML/CSS
