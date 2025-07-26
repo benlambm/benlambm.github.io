@@ -1,14 +1,5 @@
-# ─── Theme & build ──────────────────────────────────────────────────────────────
-remote_theme: pages-themes/hacker@v0.2.0   # pulls the theme at build time
+remote_theme: b2a3e8/jekyll-theme-console
 plugins:
-  - jekyll-remote-theme                    # mandatory for any remote_theme
-
-# ─── Site identity ─────────────────────────────────────────────────────────────
-title: "Ben Lamb, PhD"
-description: >
-  Research, teaching, and secure-systems projects.  
-  Minimal green-on-black aesthetic powered by the Hacker theme.
-
-# Optional extras the theme understands
-show_downloads: false          # set true to surface a source-code ZIP link
-google_analytics: ""           # UA-XXXX or G-XXXX if you need tracking
+  - jekyll-remote-theme
+title: Ben Lamb, Ph.D.
+description: GitHub page
