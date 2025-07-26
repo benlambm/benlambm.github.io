@@ -3,7 +3,7 @@
 
 Currently serving as Assistant Professor in the field of computer science and information technology with the Virginia Community College System. I bring a professional work background in application development, database programming, and cloud computing to my teaching. I am certified in Java programming, Spring Framework, AWS development, and hold multiple industry certifications.
 
-**Note: I am not currently seeking new job opportunities.**
+*Note: I am not currently seeking new job opportunities.*
 
 ## About Me
 
