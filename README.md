@@ -1,3 +1,4 @@
+# Benjamin Lamb, PhD
 
 - Hi, I’m @benlambm on GitHub!
 
