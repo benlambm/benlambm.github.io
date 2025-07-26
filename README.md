@@ -1,4 +1,3 @@
-# Dr. Benjamin Lamb
 
 - Hi, I’m @benlambm on GitHub !
 
