@@ -1,5 +1,14 @@
-remote_theme: pages-themes/dinky@v0.2.0
+remote_theme: jekyll/minima           # pulls Minima v3 straight from GitHub
 plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
-title: Call me, Ben
-description: Welcome to my homepage! 😅
+  - jekyll-remote-theme
+
+title: "Ben Lamb, PhD"
+subtitle: "Assistant Professor · Secure Systems & Software Architecture"
+description: >
+  Minimalist portfolio, writings, and project links.
+  Built with dark-mode-ready Minima.
+
+minima:
+  skin: dark        # use 'auto' to follow visitor preference
+  social_links:
+    - { platform: github,  user_url: "https://github.com/benjaminmlamb" }
