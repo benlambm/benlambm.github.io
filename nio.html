@@ -1,0 +1,240 @@
+<div style="background:#fcfcfc; color:#1a1a1a; font-family:'Segoe UI', Arial, sans-serif; line-height:1.75; padding:2.5em 1em 3em 1em; max-width: 920px; margin:40px auto; border-radius:18px; box-shadow:0 8px 32px rgba(30,40,60,.12);">
+
+  <h2 style="font-size:2.2em; letter-spacing:-.02em; margin-top:0; margin-bottom:1.1em; color:#14213d;">Introduction to Modern File I/O in Java with <span style="font-family:monospace; color:#1765A6;">java.nio.file</span></h2>
+
+  <p style="font-size:1.12em; margin-bottom:1.2em;">
+    In virtually every significant software application, from web servers to desktop tools to data analysis pipelines, the need to interact with the file system is fundamental. This interaction, known as <b>File Input/Output (I/O)</b>, allows programs to persist data beyond a single execution, read configuration settings, write logs, and handle user-generated content.
+  </p>
+
+  <p style="font-size:1.12em; margin-bottom:2em;">
+    While Java has always provided mechanisms for file I/O, the introduction of the
+    <strong style="font-family:monospace; background:#e2eafc; color:#0e2549; border-radius:4px; padding:0.05em 0.2em;">java.nio.file</strong>
+    package in Java 7 marked a major evolution, providing a more robust, powerful, and intuitive API that is now the industry standard for all modern Java development.
+  </p>
+
+  <h3 style="font-size:1.3em; color:#1e3050; margin-top:2.3em;">From Legacy <code style="background:#e8eef7; color:#193b5c;">java.io</code> to Modern <code style="background:#e8eef7; color:#193b5c;">java.nio.file</code></h3>
+
+  <p>
+    Before Java 7, file operations were primarily handled by the
+    <code style="background:#edeff3; color:#294464;">java.io.File</code> class. While functional, its design, dating back to Java 1.0, had several well-known shortcomings:
+  </p>
+  <ul style="padding-left:1.8em; margin-bottom:2em;">
+    <li style="margin-bottom:0.5em;">
+      <b>Poor Error Handling:</b> Many methods (like <code style="background:#edeff3; color:#294464;">delete()</code> or <code style="background:#edeff3; color:#294464;">renameTo()</code>) returned a simple <code style="background:#edeff3; color:#294464;">boolean</code> to indicate success or failure, providing no information as to <em>why</em> an operation failed (e.g., file not found, lack of permissions, disk full).
+    </li>
+    <li style="margin-bottom:0.5em;">
+      <b>Platform Dependency:</b> Handling path separators (<code style="background:#edeff3; color:#294464;">/</code> on Unix-like systems vs. <code style="background:#edeff3; color:#294464;">\</code> on Windows) required manual string concatenation with <code style="background:#edeff3; color:#294464;">File.separator</code>, which was verbose and error-prone.
+    </li>
+    <li style="margin-bottom:0.5em;">
+      <b>Limited Functionality:</b> Common operations like copying a file, reading all its lines into a list, or accessing file metadata required significant boilerplate code.
+    </li>
+    <li>
+      <b>No Atomic Operations:</b> Operations like moving a file were not guaranteed to be atomic, creating potential for data corruption in multi-threaded or failure-prone environments.
+    </li>
+  </ul>
+
+  <p style="margin-bottom:1.7em;">
+    The <code style="background:#edeff3; color:#294464;">java.nio.file</code> package (part of the "New I/O 2" project, or JSR 203) was designed specifically to overcome these limitations. It provides a comprehensive, object-oriented, and exception-driven API for interacting with file systems.
+  </p>
+
+  <h3 style="font-size:1.3em; color:#1e3050; margin-top:2.2em;">The Core Components</h3>
+  <dl style="background:#f5f7fa; border-left:6px solid #1765A6; padding:1.5em 2em 1em 2em; border-radius:12px; margin-bottom:2em;">
+    <dt style="font-weight:bold; color:#003366; font-size:1.08em; margin-top:1em;"><code>Path</code></dt>
+    <dd style="margin-bottom:1em;">
+      An interface that represents the path to a file or directory in the file system. A <code>Path</code> object is immutable and platform-independent. It is crucial to understand that a <code>Path</code> is merely a representation of a location; it is not the file itself. It's like having an address written on a piece of paper—the address is distinct from the physical house located there.
+    </dd>
+    <dt style="font-weight:bold; color:#003366; font-size:1.08em;"><code>Paths</code></dt>
+    <dd style="margin-bottom:1em;">
+      A final utility class that acts as a factory for creating <code>Path</code> objects. Its primary static method, <b><code>get()</code></b>, takes a string or a series of strings and intelligently constructs a <code>Path</code> object, automatically handling the correct path separators for the underlying operating system. This is the preferred way to create a <code>Path</code>.
+    </dd>
+    <dt style="font-weight:bold; color:#003366; font-size:1.08em;"><code>Files</code></dt>
+    <dd>
+      A final utility class that contains a rich set of static methods to operate on the files and directories represented by <code>Path</code> objects. This is where the action happens: reading, writing, creating, deleting, copying, moving, and checking attributes of files and directories.
+    </dd>
+  </dl>
+
+  <p>
+    Let's explore how to use these components together to perform the most common file operations. Notice that all operations that interact with the disk are wrapped in a <code>try-catch</code> block.
+  </p>
+
+  <h3 style="font-size:1.2em; color:#1e3050; margin-top:2em;">Step 1: Creating a Path with <code>Paths.get()</code></h3>
+  <p>
+    Before you can do anything with a file, you need to specify its location using a <code>Path</code>. The <code>Paths.get()</code> factory method is the standard, platform-independent way to do this.
+  </p>
+  <pre style="background:#151b23; color:#f6f8fa; padding:1.3em 1em; border-radius:12px; font-size:1.04em; overflow-x:auto; margin-bottom:1.7em;"><code class="language-java" style="font-family:Consolas, Monaco, monospace; font-size:1em;">import java.nio.file.Path;
+import java.nio.file.Paths;
+
+// Creates a Path object. This does NOT create a file on the disk.
+// It simply represents the location "data/output.txt" relative to the project's root.
+Path filePath = Paths.get("data", "output.txt");
+
+// On Windows, this path might resolve to "data\output.txt"
+// On macOS/Linux, it resolves to "data/output.txt"
+// The .toAbsolutePath() method can show you the full path.
+System.out.println("Path created: " + filePath.toAbsolutePath());</code></pre>
+
+  <h3 style="font-size:1.2em; color:#1e3050; margin-top:2em;">Step 2: Writing to a File with <code>Files.write()</code></h3>
+  <p>
+    The <code>Files.write()</code> method provides an incredibly simple way to write content to a file. One of its most convenient overloads accepts a <code>Path</code> and an <code>Iterable</code> (like a <code>List&lt;String&gt;</code>), where each element in the list becomes a line in the file, automatically handling newlines.
+  </p>
+  <pre style="background:#151b23; color:#f6f8fa; padding:1.3em 1em; border-radius:12px; font-size:1.04em; overflow-x:auto; margin-bottom:1.7em;"><code class="language-java" style="font-family:Consolas, Monaco, monospace; font-size:1em;">
+// Define the path and the content to write
+Path notesPath = Paths.get("project-notes.txt");
+List&lt;String&gt; linesToWrite = Arrays.asList(
+    "Project: Phoenix",
+    "Status: In-progress",
+    "Next step: Finalize requirements."
+);
+
+try {
+    // This single line creates the file (if it doesn't exist) and writes all lines.
+    // If the file already exists, it will be OVERWRITTEN by default.
+    Files.write(notesPath, linesToWrite);
+    System.out.println("Successfully wrote to " + notesPath);
+} catch (IOException e) {
+    // This block executes if something goes wrong during the write operation.
+    System.err.println("Error writing to file: " + e.getMessage());
+    e.printStackTrace();
+}</code></pre>
+
+  <h3 style="font-size:1.2em; color:#1e3050; margin-top:2em;">Step 3: Reading from a File with <code>Files.readAllLines()</code></h3>
+  <p>
+    Complementing the write operation, <code>Files.readAllLines()</code> reads an entire file into a <code>List&lt;String&gt;</code>. This is incredibly efficient for small to medium-sized text files.
+  </p>
+  <pre style="background:#151b23; color:#f6f8fa; padding:1.3em 1em; border-radius:12px; font-size:1.04em; overflow-x:auto; margin-bottom:1.7em;"><code class="language-java" style="font-family:Consolas, Monaco, monospace; font-size:1em;">
+Path notesPath = Paths.get("project-notes.txt");
+List&lt;String&gt; linesRead = Collections.emptyList(); // Initialize to an empty list for safety
+
+try {
+    // This single line reads all lines from the file into a List.
+    linesRead = Files.readAllLines(notesPath);
+    System.out.println("Successfully read from file.");
+} catch (IOException e) {
+    // This block executes if the file doesn't exist, we don't have permission, etc.
+    System.err.println("Error reading from file: " + e.getMessage());
+    e.printStackTrace();
+}
+
+// Process the lines that were read
+for (String line : linesRead) {
+    System.out.println("LINE: " + line);
+}</code></pre>
+
+  <p>
+    You have seen every file operation wrapped in a <code>try-catch</code> block. This is not optional; it is enforced by the Java compiler. File operations are inherently risky: a disk can be full, a file may not exist, the network connection to a remote file system could drop, or the program might not have the required permissions. These potential failures are represented in Java by <b><code>IOException</code></b>.
+  </p>
+  <p>
+    <code>IOException</code> is a <b>checked exception</b>. This distinction is fundamental to Java's error handling philosophy for creating robust applications.
+  </p>
+
+  <h3 style="font-size:1.15em; color:#1e3050; margin-top:2em;">Checked vs. Unchecked Exceptions</h3>
+  <ul style="padding-left:1.8em; margin-bottom:2em;">
+    <li style="margin-bottom:0.5em;">
+      <b>Checked Exceptions:</b> These are exceptions that a well-written application should anticipate and recover from. The Java compiler <em>checks</em> that your code handles them, forcing you to either catch them with a <code>try-catch</code> block or declare that your method might throw them using the <code>throws</code> keyword. <code>IOException</code> and <code>SQLException</code> are classic examples. They represent predictable problems that are outside the program's direct control (e.g., external resources being unavailable).
+    </li>
+    <li>
+      <b>Unchecked Exceptions:</b> These typically represent programming errors (e.g., <code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>) or unrecoverable system errors (e.g., <code>OutOfMemoryError</code>). They are subclasses of <code>RuntimeException</code> or <code>Error</code>. The compiler does not force you to handle them because they often indicate a bug that should be fixed in the code itself, rather than handled at runtime.
+    </li>
+  </ul>
+
+  <p>
+    By making <code>IOException</code> a checked exception, the Java language designers ensure that developers must consciously plan for file I/O failures, leading to more resilient and reliable software.
+  </p>
+
+  <h3 style="font-size:1.15em; color:#1e3050; margin-top:2em;">Key <code>java.nio.file</code> API Reference</h3>
+  <p>
+    The following table summarizes some of the most useful static methods in the <code>Paths</code> and <code>Files</code> classes.
+  </p>
+
+  <table style="border-collapse:separate; border-spacing:0; width:100%; background:#fff; margin:2em 0 2.5em 0; border-radius:13px; overflow:hidden; box-shadow:0 2px 10px rgba(32,32,64,0.06); font-size:1.07em;">
+    <caption style="font-size:1.13em; color:#153960; font-weight:bold; padding:0.7em 0 0.3em 0; background:#f1f7ff;">Java NIO Standard Library</caption>
+    <thead>
+      <tr style="background:#14213d; color:#fff;">
+        <th style="width: 25%; text-align: left; padding:0.9em 1em;">Method Signature</th>
+        <th style="width: 40%; text-align: left; padding:0.9em 1em;">Description</th>
+        <th style="width: 35%; text-align: left; padding:0.9em 1em;">Code Usage Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="background:#f5f8ff;">
+        <td style="padding:0.7em 1em;"><code>Paths.get(String first, String... more)</code></td>
+        <td style="padding:0.7em 1em;">Constructs a <code>Path</code> from a sequence of strings, joining them with the OS-specific path separator. This is the standard factory method.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>Path p = Paths.get("C:", "Users", "config.json");</code></pre>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0.7em 1em;"><code>Files.exists(Path path)</code></td>
+        <td style="padding:0.7em 1em;">Checks if a file or directory exists at the given path. Does not throw an <code>IOException</code> on failure, making it safe for checks.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>Path p = Paths.get("log.txt");
+if (Files.exists(p)) {
+    System.out.println("File exists.");
+}</code></pre>
+        </td>
+      </tr>
+      <tr style="background:#f5f8ff;">
+        <td style="padding:0.7em 1em;"><code>Files.createDirectory(Path path)</code></td>
+        <td style="padding:0.7em 1em;">Creates a new directory. Throws <code>IOException</code> if the directory already exists or the parent does not. Use <code>createDirectories</code> to create parent directories as well.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>try {
+    Files.createDirectory(Paths.get("temp-data"));
+} catch(IOException e) { /* handle */ }</code></pre>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0.7em 1em;"><code>Files.copy(Path source, Path target)</code></td>
+        <td style="padding:0.7em 1em;">Copies a file from a source path to a target path. By default, it will fail if the target file already exists. Use options to change behavior.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>Path src = Paths.get("report.pdf");
+Path dest = Paths.get("backup/report.pdf");
+try {
+    Files.copy(src, dest);
+} catch(IOException e) { /* handle */ }</code></pre>
+        </td>
+      </tr>
+      <tr style="background:#f5f8ff;">
+        <td style="padding:0.7em 1em;"><code>Files.move(Path source, Path target)</code></td>
+        <td style="padding:0.7em 1em;">Moves or renames a file. Can often be an atomic operation on the file system, making it safer than copy-then-delete.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>try {
+    Files.move(Paths.get("tmp.txt"), Paths.get("final.txt"));
+} catch(IOException e) { /* handle */ }</code></pre>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:0.7em 1em;"><code>Files.deleteIfExists(Path path)</code></td>
+        <td style="padding:0.7em 1em;">Deletes a file or an empty directory if it exists. Returns a boolean indicating if deletion occurred. Does not throw an exception if the file isn't found.</td>
+        <td style="padding:0.7em 1em;">
+          <pre style="background:#191e2a; color:#e2eaff; border-radius:7px; padding:0.7em; margin:0;"><code>try {
+    Files.deleteIfExists(Paths.get("old-log.txt"));
+} catch(IOException e) { /* handle */ }</code></pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="margin-bottom:1.8em;">
+    The <code>java.nio.file</code> API is the backbone of countless features in modern systems. Understanding it is a prerequisite for many entry-level software development roles.
+  </p>
+
+  <ul style="padding-left:1.8em; margin-bottom:2em;">
+    <li style="margin-bottom:0.6em;">
+      <b>Configuration Management:</b> Spring Boot applications read <code>application.properties</code> or <code>application.yml</code> files to configure themselves on startup.
+    </li>
+    <li style="margin-bottom:0.6em;">
+      <b>Data Processing and ETL:</b> Batch jobs read massive CSV, JSON, or XML files from the file system, process the data, and write the results to a new location or a database.
+    </li>
+    <li style="margin-bottom:0.6em;">
+      <b>Web Servers and Content Management:</b> Servers like Tomcat or Jetty read static assets (HTML, CSS, JS) from the file system to serve to clients. Content management systems read and write user-uploaded files.
+    </li>
+    <li>
+      <b>Logging Frameworks:</b> Libraries like Log4j 2 use file I/O to append log messages to files, often managing complex policies for file rotation and archiving.
+    </li>
+  </ul>
+
+  <p style="margin-bottom:0.8em;">
+    For students interested in high-performance computing or systems programming, the <code>java.nio</code> package offers even more advanced tools that build on these fundamentals. Concepts like the <b><code>WatchService</code></b> API allows a program to monitor a directory for changes (creations, deletions, modifications) in real time. For handling very large files efficiently, <b><code>FileChannel</code></b> and <b><code>ByteBuffer</code></b> provide lower-level, memory-mapped I/O that can offer significant performance gains over simple line-by-line reading.
+  </p>
+
+</div>
